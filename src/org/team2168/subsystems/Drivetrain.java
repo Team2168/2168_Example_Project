@@ -13,26 +13,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
 	
-	Victor LeftMotorVictor;
-	Victor RightMotorVictor;
+	private static Drivetrain instance = null;
 	
-	Talon RightMotorTalons;
-	Talon LeftMotorTalons;
+	private static Victor LeftMotorVictor;
+	private static Victor RightMotorVictor;
 	
-	Encoder RightEncoder;
-	Encoder LeftEncoder;
+	private static Talon RightMotorTalons;
+	private static Talon LeftMotorTalons;
 	
-	public Drivetrain() {
-		
+	private static Encoder RightEncoder;
+	private static Encoder LeftEncoder;
+	
+	private Drivetrain() {
 		LeftMotorVictor = new Victor(RobotMap.LEFT_MOTOR_VICTOR);
 		LeftMotorTalons = new Talon(RobotMap.LEFT_MOTOR_TALONS);
 		
 		RightMotorVictor = new Victor(RobotMap.RIGHT_MOTOR_VICTOR);
 		RightMotorTalons = new Talon(RobotMap.RIGHT_MOTOR_TALONS);
 		
-		RightEncoder = new Encoder(RobotMap.RIGHT_MOTOR_ENCODER_A, RobotMap.RIGHT_MOTOR_ENCODER_B);
-		LeftEncoder = new Encoder(RobotMap.LEFT_MOTOR_ENCODER_A, RobotMap.LEFT_MOTOR_ENCODER_B);
+		RightEncoder = new Encoder(RobotMap.RIGHT_MOTOR_ENCODER_A,
+				RobotMap.RIGHT_MOTOR_ENCODER_B);
+		LeftEncoder = new Encoder(RobotMap.LEFT_MOTOR_ENCODER_A,
+				RobotMap.LEFT_MOTOR_ENCODER_B);
 		
+	}
+	
+	/**
+	 * Singleton design pattern. Only allow one drivetrain to be created, EVER!
+	 * @return The instance of the Drivetrain class
+	 */
+	public static Drivetrain getInstance() {
+		if(instance == null) {
+			instance = new Drivetrain();
+		}
+		
+		return instance;
 	}
     
     public void driveLeftMotor(double speed) {

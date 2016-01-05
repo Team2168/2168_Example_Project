@@ -28,8 +28,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        // instantiate the command used for the autonomous period
-        drivetrain = new Drivetrain();
+        drivetrain = Drivetrain.getInstance();
     }
 	
 	public void disabledPeriodic() {
